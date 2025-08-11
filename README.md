@@ -6,10 +6,6 @@ Mở file `index.html` trực tiếp trong trình duyệt.
 
 ### 2. Deploy lên GitHub Pages (Khuyến nghị)
 
-**Miễn phí và dễ dàng nhất!**
-
-Xem hướng dẫn chi tiết trong file [`DEPLOYMENT.md`](DEPLOYMENT.md)
-
 **Tóm tắt nhanh:**
 1. Tạo repository public trên GitHub
 2. Upload code lên GitHub

@@ -211,8 +211,8 @@ body {
     object-fit: cover;
     object-position: 30% 20%;
     display: block;
-    transform: none !important;
-    transition: none !important;
+    opacity: 0;
+    animation: heroFadeIn 2s ease-out forwards;
 }
 
 .hero-overlay {
@@ -1292,11 +1292,14 @@ body {
 }
 
 .slider-thumbnails {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     margin-top: 20px;
-    flex-wrap: wrap;
+    justify-items: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .thumbnail {
@@ -1550,13 +1553,36 @@ body {
     }
 
     .slider-thumbnails {
-        justify-content: flex-start;
-        overflow-x: auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        max-width: 250px;
         padding: 0 10px;
     }
 
     .thumbnail {
-        flex-shrink: 0;
+        width: 70px;
+        height: 52px;
+    }
+}
+
+/* Tablet specific styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .gallery-grid {
+        gap: 40px; /* Tăng khoảng cách giữa các ảnh trên tablet */
+    }
+    
+    .gallery-card {
+        min-height: 280px;
+    }
+    
+    .slider-thumbnails {
+        gap: 15px; /* Tăng khoảng cách giữa thumbnails trên tablet */
+        max-width: 350px;
+    }
+    
+    .thumbnail {
+        width: 80px;
+        height: 60px;
     }
 }
 
@@ -1689,9 +1715,29 @@ body {
     .countdown-number {
         font-size: 2rem;
     }
+
+    .slider-thumbnails {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        max-width: 200px;
+    }
+
+    .thumbnail {
+        width: 60px;
+        height: 45px;
+    }
 }
 
 /* LOADING ANIMATIONS */
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
