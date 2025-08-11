@@ -212,7 +212,8 @@ body {
     object-position: 30% 20%;
     display: block;
     opacity: 0;
-    animation: heroFadeIn 2s ease-out forwards;
+    transform: scale(1.1);
+    animation: heroReveal 3s ease-out forwards;
 }
 
 
@@ -230,26 +231,33 @@ body {
 }
 
 .hero-content {
-    position: relative;
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 3;
     width: 100%;
+    text-align: center;
 }
 
 .couple-names-overlay {
     font-family: 'Dancing Script', cursive;
-    font-size: 8rem;
+    font-size: 4.5rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--text-light);
     text-shadow: 
-        4px 4px 8px rgba(0, 0, 0, 0.3),
-        2px 2px 4px rgba(255, 255, 255, 0.2);
+        3px 3px 6px rgba(0, 0, 0, 0.7),
+        1px 1px 3px rgba(0, 0, 0, 0.5);
     margin: 0;
     line-height: 1.2;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 20px;
-    animation: fadeInUp 2s ease-out;
+    justify-content: center;
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroTextReveal 2.5s ease-out 1s forwards;
     letter-spacing: 1px;
 }
 
@@ -257,7 +265,8 @@ body {
     position: relative;
     margin-top: 40px;
     opacity: 0;
-    animation: fadeInUp 2s ease-out 1.5s forwards;
+    transform: translateY(20px);
+    animation: heroCtaReveal 1.5s ease-out 2s forwards;
     text-align: center;
     width: 100%;
     display: flex;
@@ -326,16 +335,16 @@ body {
 
 .ampersand-overlay {
     font-family: 'Dancing Script', cursive;
-    font-size: 6rem;
-    color: var(--accent-color);
-    display: block;
-    margin: 15px 0;
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    display: inline-block;
+    margin: 0 10px;
     position: relative;
     transform: scale(0) rotate(-15deg);
-    animation: scaleRotateIn 1s ease-out 0.8s forwards;
+    animation: scaleRotateIn 1s ease-out 1.8s forwards;
     text-shadow: 
-        3px 3px 6px rgba(0, 0, 0, 0.3),
-        1px 1px 2px rgba(255, 255, 255, 0.2);
+        2px 2px 4px rgba(0, 0, 0, 0.7),
+        1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes slideInUp {
@@ -369,6 +378,16 @@ body {
     background: rgba(255, 255, 255, 0.3);
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    animation: bounce 2s infinite;
+    z-index: 4;
 }
 
 .scroll-indicator {
@@ -1464,6 +1483,15 @@ body {
         object-position: 30% 15%;
     }
 
+    .couple-names-overlay {
+        font-size: 3.5rem;
+        gap: 12px;
+    }
+
+    .ampersand-overlay {
+        font-size: 3rem;
+    }
+
     .nav-container {
         justify-content: center;
         position: relative;
@@ -1681,12 +1709,14 @@ body {
     }
 
     .couple-names-overlay {
-        font-size: 5rem;
-        gap: 15px;
+        font-size: 3rem;
+        gap: 10px;
+        flex-direction: column;
     }
 
     .ampersand-overlay {
-        font-size: 4rem;
+        font-size: 2.5rem;
+        margin: 5px 0;
     }
 
     .qr-card {
@@ -1729,6 +1759,47 @@ body {
 }
 
 /* LOADING ANIMATIONS */
+@keyframes heroReveal {
+    0% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes heroTextReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes heroCtaReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    60% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @keyframes heroFadeIn {
     from {
         opacity: 0;
