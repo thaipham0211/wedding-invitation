@@ -109,13 +109,13 @@ body {
     }
     
     .nav-logo .logo-text {
-        font-size: 2.2rem;
+        font-size: 1.9rem;
         line-height: 1.1;
         display: block;
     }
     
     .header.scrolled .nav-logo .logo-text {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
     
     .header.scrolled {
