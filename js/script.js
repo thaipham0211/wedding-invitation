@@ -671,13 +671,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showSlide(index) {
     const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
     
     // Hide all slides
     slides.forEach(slide => slide.classList.remove('active'));
     
+    // Remove active from all dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    
     // Show current slide
     if (slides[index]) {
         slides[index].classList.add('active');
+    }
+    
+    // Activate current dot
+    if (dots[index]) {
+        dots[index].classList.add('active');
     }
     
     currentSlideIndex = index;
@@ -764,6 +773,69 @@ document.addEventListener('DOMContentLoaded', function() {
     if (firstPage) {
         firstPage.classList.add('active');
     }
+});
+
+// ===== QR FLIP CARD FUNCTIONALITY =====
+function flipCard(card) {
+    card.classList.toggle('flipped');
+    
+    // Add haptic feedback for mobile devices
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+    
+    // Add visual feedback with a subtle pulse effect
+    card.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+        card.style.transform = '';
+    }, 150);
+}
+
+// ===== KEYBOARD ACCESSIBILITY FOR FLIP CARDS =====
+document.addEventListener('DOMContentLoaded', function() {
+    const flipCards = document.querySelectorAll('.qr-flip-card');
+    
+    flipCards.forEach((card, index) => {
+        // Make cards focusable
+        card.setAttribute('tabindex', '0');
+        
+        // Add keyboard support
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                flipCard(card);
+            }
+        });
+        
+        // Add ARIA labels for accessibility
+        const cardTitle = card.querySelector('.qr-header h3').textContent;
+        card.setAttribute('aria-label', `Thẻ QR ${cardTitle} - Nhấp để xem`);
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-pressed', 'false');
+        
+        // Update aria-pressed when flipped
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const isFlipped = card.classList.contains('flipped');
+                    card.setAttribute('aria-pressed', isFlipped.toString());
+                }
+            });
+        });
+        
+        observer.observe(card, { attributes: true });
+        
+        // Add touch feedback for mobile
+        card.addEventListener('touchstart', function() {
+            card.style.transform = 'scale(0.98)';
+        });
+        
+        card.addEventListener('touchend', function() {
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+        });
+    });
 });
 
 console.log('🌸 Wedding Invitation Script Loaded 🌸');

@@ -1151,6 +1151,155 @@ body {
     z-index: 1;
 }
 
+/* Flip Card Styles */
+.qr-flip-card {
+    background: transparent;
+    width: 100%;
+    height: 400px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+}
+
+.qr-flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.qr-flip-card.flipped .qr-flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.qr-flip-card-front, .qr-flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 25px;
+    border: 2px solid var(--border-light);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.qr-flip-card-front {
+    background: linear-gradient(135deg, 
+        rgba(212, 197, 185, 0.15) 0%, 
+        rgba(184, 160, 130, 0.08) 50%,
+        rgba(255, 255, 255, 0.95) 100%);
+    color: var(--text-dark);
+}
+
+.qr-flip-card-back {
+    background: linear-gradient(135deg, 
+        rgba(212, 197, 185, 0.08) 0%, 
+        rgba(184, 160, 130, 0.06) 100%);
+    color: var(--text-dark);
+    transform: rotateY(180deg);
+}
+
+.qr-flip-card:hover .qr-flip-card-front,
+.qr-flip-card:hover .qr-flip-card-back {
+    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+}
+
+.qr-flip-card:hover .qr-flip-card-back {
+    transform: rotateY(180deg) translateY(-5px);
+}
+
+/* Card Icon */
+.card-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin: 20px 0;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.qr-flip-card:hover .card-icon {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* Card Preview */
+.card-preview {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.card-preview p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Animated Text */
+.animated-text {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color), var(--primary-color));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600 !important;
+    animation: textGradientShift 3s ease-in-out infinite, textFloat 2s ease-in-out infinite;
+    text-shadow: none;
+}
+
+
+
+@keyframes textGradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes textFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Flip Hints */
+.flip-back-hint {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.qr-flip-card:hover .flip-back-hint {
+    opacity: 1;
+}
+
+/* Legacy qr-card for backwards compatibility */
 .qr-card {
     background: linear-gradient(135deg, rgba(212, 197, 185, 0.08), rgba(184, 160, 130, 0.06));
     padding: 40px 30px;
@@ -1188,8 +1337,8 @@ body {
 }
 
 .qr-code {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     margin: 0 auto 25px;
     border-radius: 15px;
     overflow: hidden;
@@ -1197,19 +1346,27 @@ body {
     position: relative;
     z-index: 2;
     transition: var(--transition);
-    animation: pulse 4s ease-in-out infinite;
+    background: white;
+    padding: 10px;
 }
 
 .qr-code:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    animation: none;
 }
 
 .qr-code img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 8px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .bank-info {
@@ -1263,9 +1420,10 @@ body {
 
 .slide img {
     width: 100%;
-    height: 500px;
+    height: 600px;
     object-fit: cover;
     object-position: center top;
+    display: block;
 }
 
 .slide-caption {
@@ -1361,6 +1519,59 @@ body {
     position: relative;
     z-index: 1;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Slider Dots */
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 20px 0;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(212, 197, 185, 0.4);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.dot:hover {
+    background: rgba(212, 197, 185, 0.6);
+    transform: scale(1.2);
+    border-color: rgba(212, 197, 185, 0.3);
+}
+
+.dot.active {
+    background: var(--primary-color);
+    transform: scale(1.3);
+    border-color: rgba(212, 197, 185, 0.2);
+    box-shadow: 0 0 0 4px rgba(212, 197, 185, 0.2);
+}
+
+.dot.active::before {
+    transform: translate(-50%, -50%) scale(1);
+    background: var(--text-light);
 }
 
 .slider-thumbnails {
@@ -1628,6 +1839,15 @@ body {
         gap: 40px;
     }
 
+    .qr-flip-card {
+        height: 350px;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+        margin: 15px 0;
+    }
+
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -1643,6 +1863,17 @@ body {
     .thumbnail {
         width: 70px;
         height: 52px;
+    }
+
+    .slider-dots {
+        gap: 10px;
+        margin-top: 20px;
+        padding: 15px 0;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -1777,12 +2008,47 @@ body {
     }
 
     .qr-code {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
+        padding: 8px;
+    }
+
+    .qr-flip-card {
+        height: 320px;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+        margin: 10px 0;
+    }
+
+    .qr-flip-card-front, .qr-flip-card-back {
+        padding: 20px;
+    }
+    
+    .qr-flip-card-front {
+        /* Mobile optimization for image sharpness */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .qr-flip-card-back {
+        /* Maintain rotateY transform for back face */
+        -webkit-transform: rotateY(180deg) translateZ(0);
+        transform: rotateY(180deg) translateZ(0);
+    }
+    
+    .qr-code img {
+        /* Force GPU acceleration for crisp images on mobile */
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+        image-rendering: crisp-edges;
     }
 
     .slide img {
-        height: 300px;
+        height: 400px;
         object-position: center top;
     }
 
@@ -1808,6 +2074,46 @@ body {
     .thumbnail {
         width: 60px;
         height: 45px;
+    }
+
+    .slider-dots {
+        gap: 8px;
+        margin-top: 15px;
+        padding: 10px 0;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* iOS/Safari specific fixes for QR image blur */
+@supports (-webkit-touch-callout: none) {
+    .qr-flip-card-inner {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    .qr-code img {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        filter: contrast(1.1) brightness(1.05);
+    }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .qr-code img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+        image-rendering: crisp-edges;
+        -webkit-filter: contrast(1.05);
+        filter: contrast(1.05);
     }
 }
 
