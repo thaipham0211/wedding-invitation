@@ -671,18 +671,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showSlide(index) {
     const slides = document.querySelectorAll('.slide');
-    const thumbnails = document.querySelectorAll('.thumbnail');
     
     // Hide all slides
     slides.forEach(slide => slide.classList.remove('active'));
-    thumbnails.forEach(thumb => thumb.classList.remove('active'));
     
     // Show current slide
     if (slides[index]) {
         slides[index].classList.add('active');
-    }
-    if (thumbnails[index]) {
-        thumbnails[index].classList.add('active');
     }
     
     currentSlideIndex = index;
@@ -705,7 +700,7 @@ function currentSlide(index) {
 }
 
 function startAutoSlide() {
-    slideInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+    slideInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
 }
 
 function pauseAutoSlide() {
